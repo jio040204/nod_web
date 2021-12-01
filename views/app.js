@@ -48,10 +48,10 @@ app.post('/s_register',(req,res)=>{
     const s_pnum=body.s_pnum;
     const s_pw =body.s_pw;
 
-    con.query('select * from student where s_grade=?',[s_grade],(err,data)=>{
+    con.query('select * from net_after.student where s_grade=?',[s_grade],(err,data)=>{
         if(data.length == 0 ){
             console.log('회원가입 성공');
-            con.query('insert into student(s_grade, s_name, s_pnum, s_pw) values(?,?,?,?)',[
+            con.query('insert into net_after.student(s_grade, s_name, s_pnum, s_pw) values(?,?,?,?)',[
                 s_grade, s_name, s_pnum, s_pw,
             ]);
             res.send('<script>alert("회원가입 성공!!!"); location.href="/"</script>')
@@ -77,10 +77,10 @@ app.post('/t_register',(req,res)=>{
     const t_pnum=body.t_pnum;
     const t_pw =body.t_pw;
 
-    con.query('select * from teacher where t_code=?',[t_code],(err,data)=>{
+    con.query('select * from net_after.teacher where t_code=?',[t_code],(err,data)=>{
         if(data.length == 0 ){
             console.log('회원가입 성공');
-            con.query('insert into teacher(t_code, t_name, t_pnum, t_pw) values(?,?,?,?)',[
+            con.query('insert into net_after.teacher(t_code, t_name, t_pnum, t_pw) values(?,?,?,?)',[
                 t_code, t_name, t_pnum, t_pw,
             ]);
             res.send('<script>alert("회원가입 성공!!!"); location.href="/"</script>')
@@ -93,9 +93,9 @@ app.post('/t_register',(req,res)=>{
 });
 
 //학생로그인
-app.get('/login',(req,res)=>{
+app.get('/s_login',(req,res)=>{
     console.log('로그인 작동');
-    res.render('login');
+    res.render('s_login');
 });
 
 app.post('/s_login',(req,res)=>{
@@ -103,7 +103,7 @@ app.post('/s_login',(req,res)=>{
     const s_grade = body.s_grade;
     const s_pw = body.s_pw;
 
-    con.query('select * from student where s_grade=?',[s_grade],(err,data)=>{
+    con.query('select * from net_after.student where s_grade=?',[s_grade],(err,data)=>{
         //로그인 확인
         console.log(data[0]);
         console.log(s_grade);
@@ -120,7 +120,7 @@ app.post('/s_login',(req,res)=>{
             req.session.s_pnum = data.s_pnum;
             req.session.s_pw = data.s_pw;
             req.session.save(function(){ //세션 스토어에 적용하는 작업
-                res.render('index',{ //정보전달
+                res.render('s_index',{ //정보전달
                     s_grade : data[0].s_grade,
                     s_name : data[0].s_name,
                     s_pnum : data[0].s_pnum,
@@ -136,9 +136,9 @@ app.post('/s_login',(req,res)=>{
 })
 
 //선생님로그인
-app.get('/login',(req,res)=>{
+app.get('/t_login',(req,res)=>{
     console.log('로그인 작동');
-    res.render('login');
+    res.render('t_login');
 });
 
 app.post('/t_login',(req,res)=>{
@@ -146,7 +146,7 @@ app.post('/t_login',(req,res)=>{
     const t_code = body.t_code;
     const t_pw = body.t_pw;
 
-    con.query('select * from teacher where t_code=?',[t_code],(err,data)=>{
+    con.query('select * from net_after.teacher where t_code=?',[t_code],(err,data)=>{
         //로그인 확인
         console.log(data[0]);
         console.log(t_code);
@@ -163,7 +163,7 @@ app.post('/t_login',(req,res)=>{
             req.session.t_pnum = data.t_pnum;
             req.session.t_pw = data.t_pw;
             req.session.save(function(){ //세션 스토어에 적용하는 작업
-                res.render('index',{ //정보전달
+                res.render('t_index',{ //정보전달
                     t_code : data[0].t_code,
                     t_name : data[0].t_name,
                     t_pnum : data[0].t_pnum,
@@ -183,6 +183,44 @@ app.get('/logout',(req,res)=>{
     console.log('로그아웃 성공');
     req.session.destroy(function(err){
         //세션 파괴후 할 것들
+        res.redirect('/');
+    });
+});
+
+//사용자정보 삭제문
+app.get('/delete/:s_grade',(req,res) => {
+    const sql = 'DELETE FROM net_after.student WHERE id = ?';
+    con.query(sql,[req.params.id], function (err, result, fields){
+        if(err) throw err;
+        console.log(result);
+        res.redirect('/');
+    });
+});
+//사용자정보 삭제문
+app.get('/delete/:t_code',(req,res) => {
+    const sql = 'DELETE FROM net_after.teacher WHERE id = ?';
+    con.query(sql,[req.params.id], function (err, result, fields){
+        if(err) throw err;
+        console.log(result);
+        res.redirect('/');
+    });
+});
+
+//users 레코드값 수정페이지 화면
+app.get('/edit/:id', (req, res) => {
+    const sql = 'SELECT * FROM node_db.users WHERE id = ?';
+    con.query(sql,[req.params.id], function (err, result, fields){
+        if(err) throw err;
+        res.render('edit',{users : result});
+    });
+})
+
+//users 레코드값 수정(업데이트) 구문
+app.post('/update/:id',(req,res) => {
+    const sql = 'UPDATE node_db.users SET ? WHERE id =' + req.params.id;
+    con.query(sql, req.body, function (err, result, fields){
+        if(err) throw err;
+        console.log(result);
         res.redirect('/');
     });
 });

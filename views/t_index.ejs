@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선생님정보</title>
+	<style>
+        table, td, th{
+            border: 1px solid black;
+        }
+        table{
+            width:30%;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <% if(is_logined == false) { %>
+    <table width="30%">
+        <tr>
+            <td><a href="/">Home</a></td>
+            <td><a href="/t_login">login</a></td>
+            <td><a href="/t_register">register</a></td>
+        </tr>
+    </table>
+
+    <% }else{ %>
+
+        <table width="30%">
+            <tr>
+                <td><a href="/">Home</a></td>
+                <td><a href="/logout">logout</a></td>
+            </tr>
+        </table>
+    <% } %>
+    <h2>선생님정보목록</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>코드</th>
+				<th>이름</th>
+				<th>전화번호</th>
+				<th>비밀번호</th>
+                <th>수정</th>
+                <th>삭제</th>
+			</tr>
+		</thead>
+		<% teacher.forEach(function (value) { %>
+            <tbody>
+				<tr>
+					<td><%=value.t_code%></td>
+					<td><%=value.t_name%></td>
+					<td><%=value.t_pnum%></td>
+					<td><%=value.t_pw%></td>
+					<td><a href="/edit/<%=value.t_code%>">수정</a></td>
+					<td><a href="/delete/<%=value.t_code%>">삭제</a></td>
+				</tr>
+            </tbody>
+		<% });%>
+	</table>	
+</body>
+</html>

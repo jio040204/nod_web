@@ -42,10 +42,12 @@
 				<th>이름</th>
 				<th>전화번호</th>
 				<th>비밀번호</th>
+				<th>수정</th>
+				<th>삭제</th>
 			</tr>
 		</thead>
-		<tbody>
-			<% users.forEach(function (value) { %>
+		<% student.forEach(function (value) { %>
+			<tbody>
 				<tr>
 					<td><%=value.s_grade%></td>
 					<td><%=value.s_name%></td>
@@ -54,8 +56,8 @@
 					<td><a href="/edit/<%=value.s_grade%>">수정</a></td>
 					<td><a href="/delete/<%=value.s_grade%>">삭제</a></td>
 				</tr>
-			<% });%>
-		</tbody>
+			</tbody>
+		<% });%>
 	</table>	
 </body>
 </html>
