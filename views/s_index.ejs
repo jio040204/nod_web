@@ -36,27 +36,23 @@
     <% } %>
     <h2>학생정보목록</h2>
 	<table>
-		<thead>
-			<tr>
-				<th>학번</th>
-				<th>이름</th>
-				<th>전화번호</th>
-				<th>비밀번호</th>
-				<th>수정</th>
-				<th>삭제</th>
-			</tr>
-		</thead>
+		<tr>
+			<th>학번</th>
+			<th>이름</th>
+			<th>전화번호</th>
+			<th>비밀번호</th>
+			<th>수정</th>
+			<th>삭제</th>
+		</tr>
 		<% student.forEach(function (value) { %>
-			<tbody>
-				<tr>
-					<td><%=value.s_grade%></td>
-					<td><%=value.s_name%></td>
-					<td><%=value.s_pnum%></td>
-					<td><%=value.s_pw%></td>
-					<td><a href="/edit/<%=value.s_grade%>">수정</a></td>
-					<td><a href="/delete/<%=value.s_grade%>">삭제</a></td>
-				</tr>
-			</tbody>
+			<tr>
+				<td><%=value.s_grade%></td>
+				<td><%=value.s_name%></td>
+				<td><%=value.s_pnum%></td>
+				<td><%=value.s_pw%></td>
+				<td><a href="/edit/<%=value.s_grade%>">수정</a></td>
+				<td><a href="/delete/<%=value.s_grade%>">삭제</a></td>
+			</tr>
 		<% });%>
 	</table>	
 </body>
