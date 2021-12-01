@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학생정보</title>
+	<style>
+        table, td, th{
+            border: 1px solid black;
+        }
+        table{
+            width:30%;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <% if(is_logined == false) { %>
+    <table width="30%">
+        <tr>
+            <td><a href="/">Home</a></td>
+            <td><a href="/s_login">login</a></td>
+            <td><a href="/s_register">register</a></td>
+        </tr>
+    </table>
+
+    <% }else{ %>
+
+        <table width="30%">
+            <tr>
+                <td><a href="/">Home</a></td>
+                <td><a href="/logout">logout</a></td>
+            </tr>
+        </table>
+    <% } %>
+    <h2>학생정보목록</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>학번</th>
+				<th>이름</th>
+				<th>전화번호</th>
+				<th>비밀번호</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% users.forEach(function (value) { %>
+				<tr>
+					<td><%=value.s_grade%></td>
+					<td><%=value.s_name%></td>
+					<td><%=value.s_pnum%></td>
+					<td><%=value.s_pw%></td>
+					<td><a href="/edit/<%=value.s_grade%>">수정</a></td>
+					<td><a href="/delete/<%=value.s_grade%>">삭제</a></td>
+				</tr>
+			<% });%>
+		</tbody>
+	</table>	
+</body>
+</html>

@@ -1,4 +1,5 @@
 const express =require("express");
+const ejs = require('ejs')
 const mysql =require('mysql'); //데이터베이스 접속
 const app =express()
 const port=9000;
@@ -48,10 +49,10 @@ app.post('/register',(req,res)=>{
     const name =body.name;
     const age = body.age;
 
-    con.query('select * from users where id=?',[id],(err,data)=>{
+    con.query('select * from node_db.users where id=?',[id],(err,data)=>{
         if(data.length == 0 ){
             console.log('회원가입 성공');
-            con.query('insert into users(id, pw, name, age) values(?,?,?,?)',[
+            con.query('insert into node_db.users(id, pw, name, age) values(?,?,?,?)',[
                 id,pw,name,age,
             ]);
             res.send('<script>alert("회원가입 성공!!!"); location.href="/"</script>')
@@ -74,7 +75,7 @@ app.post('/login',(req,res)=>{
     const id = body.id;
     const pw = body.pw;
 
-    con.query('select * from users where id=?',[id],(err,data)=>{
+    con.query('select * from node_db.users where id=?',[id],(err,data)=>{
         //로그인 확인
         console.log(data[0]);
         console.log(id);
@@ -109,6 +110,35 @@ app.get('/logout',(req,res)=>{
     console.log('로그아웃 성공');
     req.session.destroy(function(err){
         //세션 파괴후 할 것들
+        res.redirect('/');
+    });
+});
+
+//사용자정보 삭제문
+app.get('/delete/:id',(req,res) => {
+    const sql = 'DELETE FROM node_db.users WHERE id = ?';
+    con.query(sql,[req.params.id], function (err, result, fields){
+        if(err) throw err;
+        console.log(result);
+        res.redirect('/');
+    });
+});
+
+//users 레코드값 수정페이지 화면
+app.get('/edit/:id', (req, res) => {
+    const sql = 'SELECT * FROM node_db.users WHERE id = ?';
+    con.query(sql,[req.params.id], function (err, result, fields){
+        if(err) throw err;
+        res.render('edit',{users : result});
+    });
+})
+
+//users 레코드값 수정(업데이트) 구문
+app.post('/update/:id',(req,res) => {
+    const sql = 'UPDATE node_db.users SET ? WHERE id =' + req.params.id;
+    con.query(sql, req.body, function (err, result, fields){
+        if(err) throw err;
+        console.log(result);
         res.redirect('/');
     });
 });
