@@ -5,23 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>선생님정보</title>
-	<style>
-        table, td, th{
-            border: 1px solid black;
-        }
-        table{
-            width:30%;
-            border-collapse: collapse;
-        }
-    </style>
+    <link rel="stylesheet" href="views/app.css">
 </head>
 <body>
     <% if(is_logined == false) { %>
     <table width="30%">
         <tr>
             <td><a href="/">Home</a></td>
-            <td><a href="/t_login">login</a></td>
-            <td><a href="/t_register">register</a></td>
+            <td><a href="/t_login">선생님로그인</a></td>
+            <td><a href="/t_register">선생님회원가입</a></td>
         </tr>
     </table>
 
@@ -56,4 +48,9 @@
 		<% });%>
 	</table>	
 </body>
+<footer class="fixed-bottom">
+    <div class="wrap">
+     방과후 관리하는 페이지
+    </div>
+  </footer>
 </html>

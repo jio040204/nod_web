@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사용자 수정</title>
+</head>
+<body>
+    <h1>업데이트 폼</h1>
+    <form action="/update/<%=student[0].s_grade%>" method="post">
+        <table>
+            <tr>
+                <th>학번</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>비밀번호</th>
+            </tr>
+            <% student.forEach(function (value) { %>
+                <tr>
+                    <td><input type = "text" name = "s_grade" value = "<%users[0].s_grade%>"></td>
+                    <td><input type = "text" name = "s_name" value = "<%users[0].s_name%>"></td>
+                    <td><input type = "text" name = "s_pnum" value = "<%users[0].s_pnum%>"></td>
+                    <td><input type = "text" name = "s_pw" value = "<%users[0].s_pw%>"></td>
+                </tr>
+            <% });%>
+            <button type = "submit">업데이트</button>
+        </table>	
+    </form>
+</body>
+</html>

@@ -36,19 +36,19 @@ app.use(session({
 
 //student 테이블의 레코드값 가져오기
 app.get('/', (req, res) => {
-    const sql = 'SElECT * FROM net_after.student';
+    const sql = 'SELECT * FROM net_after.student';
     con.query(sql, function (err, result, fields){
         if(err) throw err;
-        res.render('index', {student : result});
+        res.render('s_index', {student : result});
     });
 });
 
 //teacher 테이블의 레코드값 가져오기
 app.get('/', (req, res) => {
-    const sql = 'SElECT * FROM net_after.teacher';
+    const sql = 'SELECT * FROM net_after.teacher';
     con.query(sql, function (err, result, fields){
         if(err) throw err;
-        res.render('index', {teacher : result});
+        res.render('t_index', {teacher : result});
     });
 });
 
@@ -148,7 +148,7 @@ app.post('/s_login',(req,res)=>{
             });
         }else{
             console.log('로그인 실패');
-            res.render('s_login');
+            res.render('login');
         }
     })
 })
@@ -208,7 +208,7 @@ app.get('/logout',(req,res)=>{
 //사용자정보 삭제문
 app.get('/delete/:s_grade',(req,res) => {
     const sql = 'DELETE FROM net_after.student WHERE s_grade = ?';
-    con.query(sql,[req.params.id], function (err, result, fields){
+    con.query(sql,[req.params.s_grade], function (err, result, fields){
         if(err) throw err;
         console.log(result);
         res.redirect('/');
@@ -217,7 +217,7 @@ app.get('/delete/:s_grade',(req,res) => {
 //사용자정보 삭제문
 app.get('/delete/:t_code',(req,res) => {
     const sql = 'DELETE FROM net_after.teacher WHERE t_code = ?';
-    con.query(sql,[req.params.id], function (err, result, fields){
+    con.query(sql,[req.params.t_code], function (err, result, fields){
         if(err) throw err;
         console.log(result);
         res.redirect('/');
@@ -227,7 +227,7 @@ app.get('/delete/:t_code',(req,res) => {
 //student 레코드값 수정페이지 화면
 app.get('/edit/:s_grade', (req, res) => {
     const sql = 'SELECT * FROM net_after.student WHERE s_grade = ?';
-    con.query(sql,[req.params.id], function (err, result, fields){
+    con.query(sql,[req.params.s_grade], function (err, result, fields){
         if(err) throw err;
         res.render('edit',{student : result});
     });
@@ -236,7 +236,7 @@ app.get('/edit/:s_grade', (req, res) => {
 //teacher 레코드값 수정페이지 화면
 app.get('/edit/:t_code', (req, res) => {
     const sql = 'SELECT * FROM net_after.teacher WHERE t_code = ?';
-    con.query(sql,[req.params.id], function (err, result, fields){
+    con.query(sql,[req.params.t_code], function (err, result, fields){
         if(err) throw err;
         res.render('edit',{teacher : result});
     });
