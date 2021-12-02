@@ -34,6 +34,24 @@ app.use(session({
     store : new FileStore() //세션이 데이터를 저장하는 곳
 }));
 
+//student 테이블의 레코드값 가져오기
+app.get('/', (req, res) => {
+    const sql = 'SELECT * FROM net_after.student';
+    con.query(sql, function (err, result, fields){
+        if(err) throw err;
+        res.render('s_index', {student : result});
+    });
+});
+
+//teacher 테이블의 레코드값 가져오기
+app.get('/', (req, res) => {
+    const sql = 'SELECT * FROM net_after.teacher';
+    con.query(sql, function (err, result, fields){
+        if(err) throw err;
+        res.render('t_index', {teacher : result});
+    });
+});
+
 //학생회원가입
 app.get('/s_register',(req,res)=>{
     console.log('학생회원가입 페이지');
@@ -130,7 +148,7 @@ app.post('/s_login',(req,res)=>{
             });
         }else{
             console.log('로그인 실패');
-            res.render('s_login');
+            res.render('login');
         }
     })
 })
@@ -189,8 +207,8 @@ app.get('/logout',(req,res)=>{
 
 //사용자정보 삭제문
 app.get('/delete/:s_grade',(req,res) => {
-    const sql = 'DELETE FROM net_after.student WHERE id = ?';
-    con.query(sql,[req.params.id], function (err, result, fields){
+    const sql = 'DELETE FROM net_after.student WHERE s_grade = ?';
+    con.query(sql,[req.params.s_grade], function (err, result, fields){
         if(err) throw err;
         console.log(result);
         res.redirect('/');
@@ -198,26 +216,45 @@ app.get('/delete/:s_grade',(req,res) => {
 });
 //사용자정보 삭제문
 app.get('/delete/:t_code',(req,res) => {
-    const sql = 'DELETE FROM net_after.teacher WHERE id = ?';
-    con.query(sql,[req.params.id], function (err, result, fields){
+    const sql = 'DELETE FROM net_after.teacher WHERE t_code = ?';
+    con.query(sql,[req.params.t_code], function (err, result, fields){
         if(err) throw err;
         console.log(result);
         res.redirect('/');
     });
 });
 
-//users 레코드값 수정페이지 화면
-app.get('/edit/:id', (req, res) => {
-    const sql = 'SELECT * FROM node_db.users WHERE id = ?';
-    con.query(sql,[req.params.id], function (err, result, fields){
+//student 레코드값 수정페이지 화면
+app.get('/edit/:s_grade', (req, res) => {
+    const sql = 'SELECT * FROM net_after.student WHERE s_grade = ?';
+    con.query(sql,[req.params.s_grade], function (err, result, fields){
         if(err) throw err;
-        res.render('edit',{users : result});
+        res.render('edit',{student : result});
     });
 })
 
-//users 레코드값 수정(업데이트) 구문
-app.post('/update/:id',(req,res) => {
-    const sql = 'UPDATE node_db.users SET ? WHERE id =' + req.params.id;
+//teacher 레코드값 수정페이지 화면
+app.get('/edit/:t_code', (req, res) => {
+    const sql = 'SELECT * FROM net_after.teacher WHERE t_code = ?';
+    con.query(sql,[req.params.t_code], function (err, result, fields){
+        if(err) throw err;
+        res.render('edit',{teacher : result});
+    });
+})
+
+//student 레코드값 수정(업데이트) 구문
+app.post('/update/:s_grade',(req,res) => {
+    const sql = 'UPDATE net_after.student SET ? WHERE s_grade =' + req.params.s_grade;
+    con.query(sql, req.body, function (err, result, fields){
+        if(err) throw err;
+        console.log(result);
+        res.redirect('/');
+    });
+});
+
+//teacher 레코드값 수정(업데이트) 구문
+app.post('/update/:t_code',(req,res) => {
+    const sql = 'UPDATE net_after.teacher SET ? WHERE t_code =' + req.params.t_code;
     con.query(sql, req.body, function (err, result, fields){
         if(err) throw err;
         console.log(result);
