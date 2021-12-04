@@ -1,6 +1,6 @@
 const express =require("express");
 const mysql =require('mysql'); //데이터베이스 접속
-const app =express()
+const app =express();
 const port=9000;
 
 const path = require('path');
@@ -8,6 +8,7 @@ const session= require('express-session');
 const crypto= require('crypto');
 const FileStore = require('session-file-store')(session);
 const cookieParser =require('cookie-parser');
+const { fstat } = require("fs");
 
 app.set('view engine','ejs');
 app.use(express.urlencoded({ extended: true}));
@@ -24,8 +25,8 @@ const con  = mysql.createConnection({
 con.query('create database net_after', function (err, resut){
     if (err) throw err;
     console.log('database created');
-});*/
-
+});
+*/
 //세션등록
 app.use(session({
     secret :'mykey', //이 값을 통해 세션을 암호화(노출xx)
@@ -83,7 +84,7 @@ app.post('/s_register',(req,res)=>{
 
 //선생님회원가입
 app.get('/t_register',(req,res)=>{
-    console.log('학생회원가입 페이지');
+    console.log('선생님회원가입 페이지');
     res.render('t_register');
 });
 
@@ -133,22 +134,23 @@ app.post('/s_login',(req,res)=>{
             console.log('로그인 성공!');
             //세션에 추가
             req.session.is_logined = true;
-            req.session.s_grade = data.s_grade;
-            req.session.s_name = data.s_name;
-            req.session.s_pnum = data.s_pnum;
-            req.session.s_pw = data.s_pw;
+            req.session.s_grade = data[0].s_grade;
+            req.session.s_name = data[0].s_name;
+            req.session.s_pnum = data[0].s_pnum;
+            req.session.s_pw = data[0].s_pw;
             req.session.save(function(){ //세션 스토어에 적용하는 작업
                 res.render('s_index',{ //정보전달
-                    s_grade : data[0].s_grade,
-                    s_name : data[0].s_name,
-                    s_pnum : data[0].s_pnum,
-                    s_pw : data[0].s_pw,
-                    is_logined : true
+                     s_grade : data[0].s_grade,
+                     s_name : data[0].s_name,
+                     s_pnum : data[0].s_pnum,
+                     s_pw : data[0].s_pw,
+                     is_logined : true
                 });
             });
         }else{
             console.log('로그인 실패');
-            res.render('login');
+            res.send('<script>alert("로그인 실패 !!(동일한 정보가 존재하거나 정보가 없습니다!)";location.href= "/s_login"<script>')
+            res.render('s_login');
         }
     })
 })
@@ -176,10 +178,10 @@ app.post('/t_login',(req,res)=>{
             console.log('로그인 성공!');
             //세션에 추가
             req.session.is_logined = true;
-            req.session.t_code = data.t_code;
-            req.session.t_name = data.t_name;
-            req.session.t_pnum = data.t_pnum;
-            req.session.t_pw = data.t_pw;
+            req.session.t_code = data[0].t_code;
+            req.session.t_name = data[0].t_name;
+            req.session.t_pnum = data[0].t_pnum;
+            req.session.t_pw = data[0].t_pw;
             req.session.save(function(){ //세션 스토어에 적용하는 작업
                 res.render('t_index',{ //정보전달
                     t_code : data[0].t_code,
@@ -225,13 +227,13 @@ app.get('/delete/:t_code',(req,res) => {
 });
 
 //student 레코드값 수정페이지 화면
-app.get('/edit/:s_grade', (req, res) => {
-    const sql = 'SELECT * FROM net_after.student WHERE s_grade = ?';
-    con.query(sql,[req.params.s_grade], function (err, result, fields){
-        if(err) throw err;
-        res.render('edit',{student : result});
-    });
-})
+ app.get('/edit/:s_grade', (req, res) => {
+     const sql = 'SELECT * FROM net_after.student WHERE s_grade = ?';
+     con.query(sql,[req.params.s_grade], function (err, result, fields){
+         if(err) throw err;
+         res.render('s_edit',{student : result});
+     });
+ })
 
 //teacher 레코드값 수정페이지 화면
 app.get('/edit/:t_code', (req, res) => {

@@ -4,22 +4,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="views/app.css">
-  <title>학생/선생님</title>
+  <link rel="stylesheet" href="app.css" type="text/css">
 </head>
 <body>
-  <h1>자신의 직업을 선택하세요</h1>
-  <h3>학생 / 선생님<br>
-  <table>
+  <h1 id='choose'>자신의 직업을 선택하세요</h1><br>
+  <h2 id='sort'>학생                            /                             선생님<br>
+  <table id= 'table'>
     <tr>
-      <td> <button type = "button" onclick="window.location.href = '/s_login'">학생</button> </td>
-      <td> <button type = "button" onclick="window.location.href = '/t_login'">선생님</button> </td>
+      <button type = "button" id='s_btn' onclick="window.location.href = '/s_login'">학생</button> 
+       <button type = "button" id= 't_btn' onclick="window.location.href = '/t_login'">선생님</button> 
     </tr>
   </table>
-</body>
 <footer class="fixed-bottom">
     <div class="wrap">
      방과후 관리하는 페이지
     </div>
   </footer>
+</body>
 </html>
