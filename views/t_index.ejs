@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>선생님정보</title>
-    <link rel="stylesheet" href="views/app.css">
 </head>
 <body>
     <% if(is_logined == false) { %>
@@ -36,7 +35,7 @@
             <th>수정</th>
             <th>삭제</th>
 		</tr>
-		<% teacher.forEach(function (value) { %>
+		<%=teacher.forEach(function (value) {%>
 			<tr>
 				<td><%=value.t_code%></td>
 				<td><%=value.t_name%></td>
@@ -45,7 +44,7 @@
 				<td><a href="/edit/<%=value.t_code%>">수정</a></td>
 				<td><a href="/delete/<%=value.t_code%>">삭제</a></td>
 			</tr>
-		<% });%>
+		<%=}); %>
 	</table>	
 </body>
 <footer class="fixed-bottom">
