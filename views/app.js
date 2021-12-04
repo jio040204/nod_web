@@ -149,7 +149,6 @@ app.post('/s_login',(req,res)=>{
             });
         }else{
             console.log('로그인 실패');
-            res.send('<script>alert("로그인 실패 !!(동일한 정보가 존재하거나 정보가 없습니다!)";location.href= "/s_login"<script>')
             res.render('s_login');
         }
     })
@@ -227,7 +226,7 @@ app.get('/delete/:t_code',(req,res) => {
 });
 
 //student 레코드값 수정페이지 화면
- app.get('/edit/:s_grade', (req, res) => {
+ app.get('/s_edit/:s_grade', (req, res) => {
      const sql = 'SELECT * FROM net_after.student WHERE s_grade = ?';
      con.query(sql,[req.params.s_grade], function (err, result, fields){
          if(err) throw err;
@@ -236,7 +235,7 @@ app.get('/delete/:t_code',(req,res) => {
  })
 
 //teacher 레코드값 수정페이지 화면
-app.get('/edit/:t_code', (req, res) => {
+app.get('/t_edit/:t_code', (req, res) => {
     const sql = 'SELECT * FROM net_after.teacher WHERE t_code = ?';
     con.query(sql,[req.params.t_code], function (err, result, fields){
         if(err) throw err;
@@ -250,7 +249,7 @@ app.post('/update/:s_grade',(req,res) => {
     con.query(sql, req.body, function (err, result, fields){
         if(err) throw err;
         console.log(result);
-        res.redirect('/');
+        res.redirect('/s_login');
     });
 });
 
@@ -260,7 +259,7 @@ app.post('/update/:t_code',(req,res) => {
     con.query(sql, req.body, function (err, result, fields){
         if(err) throw err;
         console.log(result);
-        res.redirect('/');
+        res.redirect('/t_login');
     });
 });
 

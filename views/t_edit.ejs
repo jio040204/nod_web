@@ -6,6 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>사용자 수정</title>
 </head>
+<style>
+   
+   body,
+  html *{
+      border: 0;
+      margin: 0;
+      margin-bottom: 0%;
+      padding: 0;
+      height: 100%;
+  }
+  h1{
+      width: 100%;
+      height: 70px;
+      line-height: 70px;
+      background-color: rgb(42,198,226);
+      color:blue;
+      margin-bottom:30px;
+      text-align: center;
+  } 
+  table {
+      border: 1px solid #444444;
+    }
+    th, td {
+      border: 1px solid #444444;
+      text-align: left;
+    }
+    #td{
+      text-align: center;
+      font-size: 25px;
+    }
+    #sub{
+      width: 70px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: rgb(168, 165, 160);
+    }
+  
+    form{margin-top: 100px;
+      margin-left: 31%;
+      align-items: center;
+
+    }
+</style>
 <body>
     <h1>업데이트 폼</h1>
     <form action="/update/<%=teacher[0].t_code%>" method="post">
@@ -16,15 +59,16 @@
                 <th>전화번호</th>
                 <th>비밀번호</th>
             </tr>
-            <% teacher.forEach(function (value) { %>
                 <tr>
                     <td><input type = "text" name = "t_code" value = "<%teacher[0].t_code%>"></td>
                     <td><input type = "text" name = "t_name" value = "<%teacher[0].t_name%>"></td>
                     <td><input type = "text" name = "t_pnum" value = "<%teacher[0].t_pnum%>"></td>
                     <td><input type = "text" name = "t_pw" value = "<%teacher[0].t_pw%>"></td>
                 </tr>
-            <% });%>
-            <button type = "submit">업데이트</button>
+                <tr><td colspan="4" id='td'>
+            <button type = "submit" id='sub'>업데이트</button>
+        </td>
+        </tr>
         </table>	
     </form>
 </body>

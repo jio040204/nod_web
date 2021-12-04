@@ -7,6 +7,49 @@
 
     <title>사용자 수정</title>
 </head>
+<style>
+   
+   body,
+  html *{
+      border: 0;
+      margin: 0;
+      margin-bottom: 0%;
+      padding: 0;
+      height: 100%;
+  }
+  h1{
+      width: 100%;
+      height: 70px;
+      line-height: 70px;
+      background-color: rgb(42,198,226);
+      color:blue;
+      margin-bottom:30px;
+      text-align: center;
+  } 
+  table {
+      border: 1px solid #444444;
+    }
+    th, td {
+      border: 1px solid #444444;
+      text-align: left;
+    }
+    #td{
+      text-align: center;
+      font-size: 25px;
+    }
+    #sub{
+      width: 70px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: rgb(168, 165, 160);
+    }
+  
+    form{margin-top: 100px;
+      margin-left: 31%;
+      align-items: center;
+
+    }
+</style>
 <body>
     <h1>업데이트 폼</h1>
     <form action="/update/<%=student[0].s_grade%>" method="post">
@@ -17,15 +60,19 @@
                 <th>전화번호</th>
                 <th>비밀번호</th>
             </tr>
-            <script student.forEach(function (value) { ></script>
+           <!-- <script student.forEach(function (value) { ></script>-->
                 <tr>
-                    <td><input type = "text" name = "s_grade" value = "<%=users[0].s_grade%>"></td>
-                    <td><input type = "text" name = "s_name" value = "<%=users[0].s_name %>"></td>
-                    <td><input type = "text" name = "s_pnum" value = "<%=users[0].s_pnum%>"></td>
-                    <td><input type = "text" name = "s_pw" value = "<%=users[0].s_pw%>"></td>
+                    <td><input type = "text" name = "s_grade" value = "<%=student[0].s_grade%>"></td>
+                    <td><input type = "text" name = "s_name" value = "<%=student[0].s_name %>"></td>
+                    <td><input type = "text" name = "s_pnum" value = "<%=student[0].s_pnum%>"></td>
+                    <td><input type = "text" name = "s_pw" value = "<%=student[0].s_pw%>"></td>
                 </tr>
-            <script });></script>
-            <button type = "submit">업데이트</button>
+           <!-- <script });></script>-->
+           <tr>
+               <td colspan="4" id ='td'>
+                    <button type = "submit" id ='sub'>업데이트</button>
+                </td>
+            </tr>
         </table>	
 
         
