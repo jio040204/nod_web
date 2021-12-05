@@ -53,6 +53,15 @@ app.get('/', (req, res) => {
     });
 });
 
+//afterclass 테이블의 레코드값 가져오기
+app.get('/',(req,res)=>{
+    const sql = 'SELECT * FROM net_after.afterclass';
+    con.query(sql,function(err,result, fields){
+        if(err)throw err;
+        res.render('afterclass',{afterclass : result});
+    });
+});
+
 //학생회원가입
 app.get('/s_register',(req,res)=>{
     console.log('학생회원가입 페이지');
@@ -66,6 +75,7 @@ app.post('/s_register',(req,res)=>{
     const s_name = body.s_name;
     const s_pnum=body.s_pnum;
     const s_pw =body.s_pw;
+
 
     con.query('select * from net_after.student where s_grade=?',[s_grade],(err,data)=>{
         if(data.length == 0 ){
@@ -81,6 +91,17 @@ app.post('/s_register',(req,res)=>{
         }
     });
 });
+
+// app.post('/afterclass',(req,res)=>{
+//     console.log('페이지 접속');
+//     const bodey=req.body;
+//     const a_code= body.a_code;
+//     const a_name= body.a_name;
+//     const a_place= body.a_place;
+//     const a_time= body.a_time;
+//     const t_code= body.t_code;
+//     const s_grade= body.s_grade;
+// });
 
 //선생님회원가입
 app.get('/t_register',(req,res)=>{
@@ -197,6 +218,51 @@ app.post('/t_login',(req,res)=>{
     })
 })
 
+
+
+//교실 테이블 보여주기
+
+app.get('/afterclass', (req, res) => {
+    const sql = 'SElECT * FROM net_after.afterclass';
+    con.query(sql, function (err, result, fields){
+        if(err) throw err;
+        res.render('afterclass', {afterclass : result});
+    });
+});
+
+
+app.post('/afterclass',(req,res)=>{
+    const body = req.body;
+    const a_code = body.a_code;
+    const a_name = body.a_name;
+    const a_place = body.a_place;
+    const a_time = body.a_time;
+    const t_code = body.t_code;
+    const s_grade = body.s_grade;
+
+    con.query('select * from net_after.afterclass where a_code =?',[a_code],(err,data)=>{
+            //세션에 추가
+            req.session.is_logined = true;
+            req.session.a_code = data[0].a_code;
+            req.session.a_name = data[0].a_name;
+            req.session.a_place = data[0].a_place;
+            req.session.a_time = data[0].a_time;
+            req.session.t_code = data[0].t_code;
+            req.session.s_grade = data[0].s_grade;
+            req.session.save(function(){ //세션 스토어에 적용하는 작업
+                res.render('afterclass',{ //정보전달
+                     a_code : data[0].a_code,
+                     a_name : data[0].a_name,
+                     a_place : data[0].a_place,
+                     a_time : data[0].a_time,
+                     t_code : data[0].t_code,
+                     s_grade : data[0].s_grade,
+                     is_logined : true
+                });
+            });
+    })
+})
+
 //로그아웃
 app.get('/logout',(req,res)=>{
     console.log('로그아웃 성공');
@@ -225,6 +291,15 @@ app.get('/delete/:t_code',(req,res) => {
     });
 });
 
+//방과후 페이지
+app.get('/afterclass',(req,res)=>{
+    const sql = 'SELECT * FROM net_after.afterclass';
+    con.query(sql,[req.params], function (err, result, fields){
+        if(err) throw err;
+        res.render('afterclass',{afterclass : result});
+    });
+});
+
 //student 레코드값 수정페이지 화면
  app.get('/s_edit/:s_grade', (req, res) => {
      const sql = 'SELECT * FROM net_after.student WHERE s_grade = ?';
@@ -239,7 +314,7 @@ app.get('/t_edit/:t_code', (req, res) => {
     const sql = 'SELECT * FROM net_after.teacher WHERE t_code = ?';
     con.query(sql,[req.params.t_code], function (err, result, fields){
         if(err) throw err;
-        res.render('edit',{teacher : result});
+        res.render('t_edit',{teacher : result});
     });
 })
 

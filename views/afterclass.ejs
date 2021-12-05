@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="/views/app.js"></script>
+    <title>Afterclass</title>
+</head>
+<style>
+    body,
+  html *{
+      border: 0;
+      margin: 0;
+      margin-bottom: 0%;
+      padding: 0;
+      height: 100%;
+  }
+  
+    nav{
+      width: 100%;
+      height: 70px;
+      line-height: 70px;
+      position: relative;
+      z-index: 1000;
+      background-color: rgb(43, 198, 226);
+  }
+  nav ul{
+      list-style: none;
+      display: flex;
+      align-items: center;
+      margin-left: 1000px;
+  }
+  nav ul li{
+      margin: 0 50px;
+      padding: 8px 15px;
+      align-items: center;
+  }
+  nav ul li a{
+      text-decoration: none;
+      color: white;
+      transition: all 0.25s;
+  }
+  nav ul a:hover{
+      color: blue;
+      padding-bottom: 3px;
+      border-bottom: 1px solid blue;
+  }
+  
+  footer{
+      padding: .75em;
+      background-color: black;
+      color: white;
+      text-align: center;
+  }
+  .fixed-bottom{
+      position: fixed;
+      margin-bottom: 0%;
+      bottom : 0;
+      width : 100%;
+      height: 30px;
+  }
+  h1{
+    text-align: center;
+  }
+  h2{
+      text-align: center;
+  }
+  table {
+      width: 500px;
+      border: 1px solid #444444;
+    }
+    th, td {
+      border: 1px solid #444444;
+      text-align: left;
+    }
+
+    form{margin-top: 100px;
+      margin-left: 35%;
+      display: flex;
+      align-items: center;
+      
+
+    }
+  </style>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="/">Home</a>
+            </li>
+        </ul>
+    </nav>
+    <h1>
+        방과후 교실 목록
+    </h1>
+    <form>
+        <table>
+            <tr>
+                <td>코드</td>
+                <td>이름</td>
+                <td>장소</td>
+                <td>시간</td>
+                <td>선생님코드</td>
+                <td>학생학번</td>
+            </tr>
+            <% afterclass.forEach(function(value) { %>
+                
+            <tr>
+                <td><%=value.a_code%></td>
+                <td><%=value.a_name%></td>
+                <td><%=value.a_place%></td>
+                <td><%=value.a_time%></td>
+                <td><%=value.t_code%></td>
+                <td><%=value.s_grade%></td>
+            </tr>
+        <% }); %>
+        </table>
+    </form>
+<footer class="fixed-bottom">
+    <div class="wrap">
+     방과후 관리하는 페이지
+    </div>
+  </footer>
+</body>
+
+</html>
