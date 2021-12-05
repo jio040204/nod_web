@@ -75,13 +75,14 @@ app.post('/s_register',(req,res)=>{
     const s_name = body.s_name;
     const s_pnum=body.s_pnum;
     const s_pw =body.s_pw;
+    const a_code= body.a_code;
 
 
     con.query('select * from net_after.student where s_grade=?',[s_grade],(err,data)=>{
         if(data.length == 0 ){
             console.log('회원가입 성공');
-            con.query('insert into net_after.student(s_grade, s_name, s_pnum, s_pw) values(?,?,?,?)',[
-                s_grade, s_name, s_pnum, s_pw,
+            con.query('insert into net_after.student(s_grade, s_name, s_pnum, s_pw,a_code) values(?,?,?,?,?)',[
+                s_grade, s_name, s_pnum, s_pw,a_code,
             ]);
             res.send('<script>alert("회원가입 성공!!!"); location.href="/"</script>')
         }
@@ -159,12 +160,14 @@ app.post('/s_login',(req,res)=>{
             req.session.s_name = data[0].s_name;
             req.session.s_pnum = data[0].s_pnum;
             req.session.s_pw = data[0].s_pw;
+            req.session.a_code= data[0].a_code;
             req.session.save(function(){ //세션 스토어에 적용하는 작업
                 res.render('s_index',{ //정보전달
                      s_grade : data[0].s_grade,
                      s_name : data[0].s_name,
                      s_pnum : data[0].s_pnum,
                      s_pw : data[0].s_pw,
+                     a_code : data[0].a_code,
                      is_logined : true
                 });
             });

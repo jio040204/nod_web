@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type="text/javascript" src="/views/app.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>학생정보</title>
 </head>
@@ -154,7 +155,7 @@
             <td>학번</td>
             <td>이름</td>
             <td>전화번호</td>
-            <td>비밀번호</td>
+            <td>교실코드</td>
             <td>수정</td>
             <td>삭제</td>
         </tr>
@@ -162,7 +163,7 @@
             <td><%=s_grade%></td>
             <td><%=s_name%></td>
             <td><%=s_pnum%></td>
-            <td><%=s_pw%></td>
+            <td><%=a_code%></td>
             <td><a href="/s_edit/<%=s_grade%>">수정</a></td>
             <td><a href="/delete/<%=s_grade%>">삭제</a></td>
         </tr>
